@@ -8,8 +8,6 @@ function Header() {
             <header className={"header"}>
                 <h1>Todo list</h1>
             </header>
-
-
         </>
 
     )
