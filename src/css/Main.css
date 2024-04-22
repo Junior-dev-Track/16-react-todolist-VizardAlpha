@@ -35,3 +35,7 @@ li{
     gap: 1%;
     margin: 1%;
 }
+
+input:checked + span{
+    text-decoration: line-through;
+}

@@ -1,15 +1,45 @@
-
+import { useState } from "react";
 
 export default function TodoList() {
-    const todos = ["My first todo", "My second todo"];
+    const initialTodos = [
+        {
+            id: 1,
+            name: "My first todo",
+            done: false
+        },
+        {
+            id: 2,
+            name: "My second todo",
+            done: true
+        }
+    ]
+
+    const [todos, setTodos] = useState(initialTodos);
+
+    const handleCheck = (id) => {
+        setTodos( todos.map( todo => {
+            if(todo.id === id) {
+                return {
+                    ...todo,
+                    done: !todo.done
+                }
+            }
+        return todo
+        }))
+    }
+
     return (
         <>
             <ul>
                 {todos.map((todo) => (
-                    <li>
-                        <input type="checkbox"/>
-                        <span>{todo}</span>
-                        <button id={"done"}>Done</button>
+                    <li key={todo.id}>
+                        <input
+                            type="checkbox"
+                            id={todo.id}
+                            name={todo.name}
+                            checked={todo.done}
+                            onChange={ () => handleCheck(todo.id) }/>
+                        <span>{todo.name}</span>
                         <button id={"edit"}>Edit</button>
                         <button id={"delete"}>Delete</button>
                     </li>

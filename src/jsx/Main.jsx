@@ -1,6 +1,6 @@
 
 import '../css/Main.css'
-import TodoList from 'jsx/TodoList.jsx'
+import TodoList from './TodoList.jsx'
 
 function Main() {
 

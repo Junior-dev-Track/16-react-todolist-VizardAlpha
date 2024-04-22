@@ -7,7 +7,6 @@ function Header() {
         <>
             <header className={"header"}>
                 <h1>Todo list</h1>
-                <input type={"text"} placeholder={"Search"}/>
             </header>
 
 
