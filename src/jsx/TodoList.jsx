@@ -1,4 +1,4 @@
-import { useState } from "react";
+import {useState} from "react";
 
 export default function TodoList() {
 
@@ -17,8 +17,11 @@ export default function TodoList() {
 
     const [todos, setTodos] = useState([]);
     const [addText, setAddText] = useState("");
+    const [editText, setEditText] = useState(undefined);
+    const [editBoolean, setEditBoolean] = useState(false);
 
-    const handleAddTodo = () => {
+    const handleAddTodo = (event) => {
+        event.preventDefault();
         if(addText === "") {
             alert("Please enter a todo");
         } else {
@@ -37,12 +40,34 @@ export default function TodoList() {
         setAddText(e.target.value);
     }
 
-    const handleEdit = (e) => {
 
+    /*const handleUserKeyPress = event => {
+        const { key, keyCode } = event;
+
+        if (keyCode === 13) {
+            alert('You pressed the Enter key!');
+        }
+    };*/
+
+    /*useEffect(() => {
+        window.addEventListener('keydown', handleUserKeyPress);
+
+        return () => {
+            window.removeEventListener('keydown', handleUserKeyPress);
+        };
+    });*/
+
+    const handleEdit = (id) => {
+       const todo = todos.find(todo => todo.id === id);
+       setEditBoolean(true);
+       setEditText(todo);
+       console.log(todo);
     }
 
-    const handleDelete = () => {
-
+    const handleDelete = (id) => {
+        const deleteTodo = [...todos];
+        const newTodoCopy = deleteTodo.filter(todo => todo.id !== id);
+        setTodos(newTodoCopy);
     }
 
     const handleCheck = (id) => {
@@ -60,8 +85,10 @@ export default function TodoList() {
     return (
         <>
             <section className={"addSome"}>
-                <input value={addText} type={"text"} placeholder={"Add a new todo"} onChange={handleAddText}/>
-                <button onClick={handleAddTodo}>Add</button>
+                <form>
+                    <input value={addText} type={"text"} placeholder={"Add a new todo"} onChange={handleAddText}/>
+                    <button onClick={handleAddTodo}>Add</button>
+                </form>
             </section>
             <hr/>
             <ul>
@@ -73,9 +100,9 @@ export default function TodoList() {
                             name={todo.name}
                             checked={todo.done}
                             onChange={() => handleCheck(todo.id)}/>
-                        <span contentEditable="false">{todo.name}</span>
-                        <button id={"edit"} onClick={handleEdit}>Edit</button>
-                        <button id={"delete"} onClick={handleDelete}>Delete</button>
+                        <span suppressContentEditableWarning={true} contentEditable={editBoolean}>{todo.name}</span>
+                        <button id={"edit"} onClick={() => handleEdit(todo.id)}>Edit</button>
+                        <button id={"delete"} onClick={() => handleDelete(todo.id)}>Delete</button>
                     </li>
                 ))}
             </ul>
